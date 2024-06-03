@@ -10,11 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.40.0",
+    "axios": "^1.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.1",
+    "react-toastify": "^10.0.5",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.12",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
