@@ -11,7 +11,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <FullTemplate />,
-    children: [{ path: "todo", element: <ToDo /> }],
+    children: [{ path: "/", element: <ToDo /> }],
   },
   {
     path: "/auth",
