@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
 const FullTemplate = () => {
-  useEffect(() => {}, []);
+  // useEffect(() => {}, []);
   return (
     <div>
       <Outlet />
