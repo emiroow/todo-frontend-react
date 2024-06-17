@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 
 const FullTemplate = () => {
@@ -8,7 +9,7 @@ const FullTemplate = () => {
       <div className="drawer-content flex flex-col">
         <Navbar />
         <Outlet />
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </div>
   );
