@@ -1,10 +1,16 @@
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Fragment } from "react/jsx-runtime";
+import Modal from "../../components/common/Modal";
 import AddTodo from "./components/AddTodo";
 import TodoInfoBox from "./components/TodoInfoBox";
 import ContentBox from "./components/template/ContentBox";
 import TodoItem from "./components/template/TodoItem";
+import useTodo from "./useTodo";
 
 const Todo = () => {
+  const { setTestModal, testModal } = useTodo();
+  const [parent] = useAutoAnimate();
+
   return (
     <Fragment>
       {/* container */}
@@ -49,6 +55,18 @@ const Todo = () => {
           <ContentBox>
             <TodoItem />
           </ContentBox>
+          <button className="btn btn-info" onClick={() => setTestModal(true)}>
+            test
+          </button>
+          <div>
+            <Modal
+              modalState={testModal}
+              modalStateSetter={setTestModal}
+              title="title"
+            >
+              <div>tets</div>
+            </Modal>
+          </div>
         </div>
       </div>
     </Fragment>
