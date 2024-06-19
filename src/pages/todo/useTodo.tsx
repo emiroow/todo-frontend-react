@@ -1,8 +1,5 @@
-import { useState } from "react";
-
 const useTodo = () => {
-  const [testModal, setTestModal] = useState(false);
-  return { testModal, setTestModal };
+  return {};
 };
 
 export default useTodo;
