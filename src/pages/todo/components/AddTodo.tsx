@@ -1,20 +1,40 @@
+import { useFormik } from "formik";
 import { BiPlus } from "react-icons/bi";
-
+import * as yup from "yup";
+import FormikTextInput from "../../../components/common/FormikTextInput";
 const AddTodo = () => {
+  const test = useFormik({
+    initialValues: {
+      label: "",
+    },
+    validationSchema: yup
+      .object()
+      .shape({ label: yup.string().required("label is required filed !") }),
+    onSubmit: (value) => {
+      console.log(value);
+    },
+  });
+
   return (
-    <div className="w-[95%] md:w-[60%] lg:w-[50%] 2xl:w-[30%] m-auto flex flex-row justify-between gap-1">
-      <label className="input max-sm:input-sm input-secondary input-bordered flex items-center gap-2 w-full">
-        Todo
-        <input
-          type="text"
-          className="grow"
-          placeholder="write your todo name..."
-        />
-      </label>
-      <button className="btn btn-square max-sm:btn-sm btn-active btn-secondary">
+    <form
+      onSubmit={test.handleSubmit}
+      onReset={test.handleReset}
+      className="w-[95%] md:w-[60%] lg:w-[50%] 2xl:w-[30%] m-auto flex flex-row justify-between gap-1"
+    >
+      <FormikTextInput
+        name="label"
+        placeholder="test"
+        className="w-full"
+        formik={test}
+        innerSymbol="Todo"
+      />
+      <button
+        type="submit"
+        className="btn btn-square max-sm:btn-sm btn-active btn-secondary"
+      >
         <BiPlus className="text-2xl text-white p-0" />
       </button>
-    </div>
+    </form>
   );
 };
 
