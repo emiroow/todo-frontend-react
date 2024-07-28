@@ -1,17 +1,18 @@
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const AuthTemplate = () => {
   const notPathName = !useLocation().pathname.split("/")[2];
   const navigate = useNavigate();
+
   useEffect(() => {
     if (notPathName) navigate("/auth/login");
   }, [notPathName]);
 
   return (
-    <div>
+    <Fragment>
       <Outlet />
-    </div>
+    </Fragment>
   );
 };
 

@@ -1,7 +1,7 @@
 const Navbar = () => {
   return (
     <div className="navbar bg-base-300 drop-shadow-lg px-5">
-      <div className="flex-1 font-bold text-xl">daisyUI</div>
+      <div className="flex-1 font-bold text-xl">Todo ❤️</div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">

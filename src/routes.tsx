@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
     element: <AuthTemplate />,
     children: [
       { path: "login", element: <Login /> },
-      { path: "sigUp", element: <SignUp /> },
+      { path: "signup", element: <SignUp /> },
       { path: "forgetPassword", element: <ForgetPassword /> },
     ],
   },

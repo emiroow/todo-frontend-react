@@ -1,32 +1,21 @@
-import { useFormik } from "formik";
 import { BiPlus } from "react-icons/bi";
-import * as yup from "yup";
 import FormikTextInput from "../../../components/common/FormikTextInput";
+import useTodo from "../useTodo";
 const AddTodo = () => {
-  const test = useFormik({
-    initialValues: {
-      label: "",
-    },
-    validationSchema: yup
-      .object()
-      .shape({ label: yup.string().required("label is required filed !") }),
-    onSubmit: (value) => {
-      console.log(value);
-    },
-  });
+  const { todoFormik } = useTodo();
 
   return (
     <form
-      onSubmit={test.handleSubmit}
-      onReset={test.handleReset}
+      onSubmit={todoFormik.handleSubmit}
+      onReset={todoFormik.handleReset}
       className="w-[95%] md:w-[60%] lg:w-[50%] 2xl:w-[30%] m-auto flex flex-row justify-between gap-1"
     >
       <FormikTextInput
         name="label"
         placeholder="test"
         className="w-full"
-        formik={test}
-        innerSymbol="Todo"
+        formik={todoFormik}
+        innerSymbol="subject"
       />
       <button
         type="submit"
