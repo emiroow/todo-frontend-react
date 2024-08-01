@@ -1,21 +1,60 @@
+import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
+import Joi from "joi";
 import { FaKey, FaUserTie } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import * as yup from "yup";
 import FormikTextInput from "../../components/common/FormikTextInput";
+import { apiService } from "../../service/axiosService";
+import { validateSchema } from "../../utils/common/joiValidator";
 
 const Login = () => {
+  const schema = Joi.object({
+    user: Joi.string().min(4).required().messages({
+      "any.required": "user is required felid",
+      "string.base": "user most be string",
+      "string.empty": "user cannot be an empty field",
+      "string.min": "user should have a minimum length of 4",
+    }),
+    password: Joi.string()
+      .min(8)
+      .max(30)
+      .pattern(new RegExp("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]+$"))
+      .required()
+      .messages({
+        "any.required": "password is required felid",
+        "string.pattern.base":
+          "password must contain at least one letter and one number",
+        "string.base": "password most be string",
+        "string.empty": "password cannot be an empty field",
+        "string.min": "password should have a minimum length of 8",
+        "string.max": "password should have a minimum length of 30",
+      }),
+  });
+
   const loginFormik = useFormik({
     initialValues: {
       user: "",
       password: "",
     },
-    validationSchema: yup.object().shape({
-      user: yup.string().required("user is required filed !"),
-      password: yup.number().required("password is required filed !"),
-    }),
+    validate: (value) => validateSchema(schema, value),
     onSubmit: (value) => {
-      console.log(value);
+      loginMutation.mutate(value);
+    },
+  });
+
+  const login = async (loginData: { user: string; password: string }) => {
+    const data = await apiService({
+      method: "POST",
+      path: "auth/login",
+      Option: { data: loginData },
+    });
+    return data;
+  };
+
+  const loginMutation = useMutation({
+    mutationFn: login,
+    onSuccess: (data) => {
+      console.log(data);
     },
   });
 
