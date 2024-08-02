@@ -4,9 +4,11 @@ import axios, {
   InternalAxiosRequestConfig,
   Method,
 } from "axios";
+import { toast } from "react-toastify";
 import { IAxiosOptions } from "../interfaces/IAxios";
+import { IResponse } from "../interfaces/IGlobal";
 
-export const apiService = async ({
+export const apiService = async <T>({
   method,
   path,
   Option,
@@ -14,7 +16,7 @@ export const apiService = async ({
   path: string;
   method: Method;
   Option?: IAxiosOptions<any>;
-}) => {
+}): Promise<IResponse<T>> => {
   const axiosInstance = axios.create();
 
   axiosInstance.interceptors.request.use(
@@ -31,15 +33,14 @@ export const apiService = async ({
   );
 
   axiosInstance.interceptors.response.use(
-    (response: AxiosResponse) => {
+    (response: AxiosResponse<IResponse<T>>) => {
       return response;
     },
-    (error: AxiosError) => {
-      console.log(error);
-      if (error.response && error.response.status === 401) {
-        console.error("Unauthorized, logging out...");
+    (error: AxiosError<IResponse<T>>) => {
+      if (error.response) {
+        toast.error(error.response.data.massage);
       }
-      return Promise.reject(error);
+      return Promise.reject(error.response?.data);
     }
   );
 

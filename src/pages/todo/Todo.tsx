@@ -1,3 +1,5 @@
+import useAuth from "@/store/useAuth";
+import { useEffect } from "react";
 import { Fragment } from "react/jsx-runtime";
 import AddTodo from "./components/AddTodo";
 import TodoInfoBox from "./components/TodoInfoBox";
@@ -5,6 +7,10 @@ import ContentBox from "./components/template/ContentBox";
 import TodoItem from "./components/template/TodoItem";
 
 const Todo = () => {
+  const store = useAuth((state) => state.auth);
+  useEffect(() => {
+    console.log(store);
+  });
   return (
     <Fragment>
       {/* container */}

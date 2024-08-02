@@ -1,13 +1,21 @@
+import FormikTextInput from "@/components/common/FormikTextInput";
+import { ILoginResponse } from "@/interfaces/response/ILogin";
+import { apiService } from "@/service/axiosService";
+import useAuth from "@/store/useAuth";
+import { validateSchema } from "@/utils/common/joiValidator";
+import { setHashedLocalStorage } from "@/utils/helpers/hash.helper";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import Joi from "joi";
 import { FaKey, FaUserTie } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import FormikTextInput from "../../components/common/FormikTextInput";
-import { apiService } from "../../service/axiosService";
-import { validateSchema } from "../../utils/common/joiValidator";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const setUser = useAuth((state) => state.setUser);
+
   const schema = Joi.object({
     user: Joi.string().min(4).required().messages({
       "any.required": "user is required felid",
@@ -43,18 +51,25 @@ const Login = () => {
   });
 
   const login = async (loginData: { user: string; password: string }) => {
-    const data = await apiService({
+    const data = await apiService<ILoginResponse>({
       method: "POST",
       path: "auth/login",
       Option: { data: loginData },
     });
     return data;
   };
-
   const loginMutation = useMutation({
     mutationFn: login,
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: (res) => {
+      toast.success("Login Success !");
+      if (res.status) {
+        setHashedLocalStorage("TodoApp", res.data);
+        navigate("/");
+        setUser(res.data?.user);
+      }
+    },
+    onError: (error) => {
+      console.log(error);
     },
   });
 

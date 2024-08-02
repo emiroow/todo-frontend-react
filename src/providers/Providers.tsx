@@ -8,7 +8,18 @@ const Providers = ({ children }: { children: React.ReactElement }) => {
   const queryClient = new QueryClient();
   return (
     <Suspense fallback={<Loading />}>
-      <ToastContainer />
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </Suspense>
   );
