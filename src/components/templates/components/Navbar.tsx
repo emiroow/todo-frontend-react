@@ -1,4 +1,8 @@
+import useAuth from "@/store/useAuth";
+
 const Navbar = () => {
+  const logout = useAuth((state) => state.logOut);
+
   return (
     <div className="navbar bg-base-300 drop-shadow-lg px-5">
       <div className="flex-1 font-bold text-xl">Todo ❤️</div>
@@ -63,7 +67,7 @@ const Navbar = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <a onClick={logout}>Logout</a>
             </li>
           </ul>
         </div>

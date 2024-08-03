@@ -13,8 +13,8 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
-
   const setUser = useAuth((state) => state.setUser);
+  const setLoginStatus = useAuth((state) => state.setLoginStatus);
 
   const schema = Joi.object({
     user: Joi.string().min(4).required().messages({
@@ -64,8 +64,9 @@ const Login = () => {
       toast.success("Login Success !");
       if (res.status) {
         setHashedLocalStorage("TodoApp", res.data);
-        navigate("/");
+        setLoginStatus(true);
         setUser(res.data?.user);
+        navigate("/");
       }
     },
     onError: (error) => {

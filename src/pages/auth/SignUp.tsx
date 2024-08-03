@@ -1,7 +1,6 @@
 import { useFormik } from "formik";
 import { FaKey, FaUserTie } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import * as yup from "yup";
 import FormikTextInput from "../../components/common/FormikTextInput";
 
 const SignUp = () => {
@@ -11,14 +10,6 @@ const SignUp = () => {
       password: "",
       confirmPassword: "",
     },
-    validationSchema: yup.object().shape({
-      user: yup.string().required("user is required filed !"),
-      password: yup.number().required("password is required filed !"),
-      confirmPassword: yup
-        .number()
-        .required("confirm password is required filed !")
-        .oneOf([yup.ref("password")], "Passwords must match"),
-    }),
     onSubmit: (value) => {
       console.log(value);
     },
