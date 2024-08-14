@@ -2,10 +2,17 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sansBold: ["sansBold"],
+        sansMedium: ["sansMedium"],
+        sansRegular: ["sansRegular"],
+        sansLight: ["sansLight"],
+      },
+    },
   },
   daisyui: {
-    themes: ["night"],
+    themes: ["night", "cupcake"],
   },
   darkMode: ["class", '[data-theme="night"]'],
   plugins: [require("daisyui")],

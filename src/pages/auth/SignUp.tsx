@@ -1,15 +1,62 @@
+import { validateSchema } from "@/utils/common/joiValidator";
 import { useFormik } from "formik";
+import Joi from "joi";
 import { FaKey, FaUserTie } from "react-icons/fa";
+import { LuMail } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import FormikTextInput from "../../components/common/FormikTextInput";
 
 const SignUp = () => {
+  const schema = Joi.object({
+    fullName: Joi.string().required().min(5).max(20).messages({
+      "any.required": "{{#label}} is required felid",
+      "string.base": "{{#label}} most be string",
+      "string.empty": "{{#label}} cannot be an empty field",
+      "string.min": "{{#label}} should have a minimum length of 5",
+      "string.max": "{{#label}} should have a minimum length of 20",
+    }),
+    email: Joi.string().required().min(5).max(30).messages({
+      "any.required": "{{#label}} is required felid",
+      "string.base": "{{#label}} most be string",
+      "string.empty": "{{#label}} cannot be an empty field",
+      "string.min": "{{#label}} should have a minimum length of 5",
+      "string.max": "{{#label}} should have a minimum length of 30",
+    }),
+    user: Joi.string().min(4).required().messages({
+      "any.required": "{{#label}} is required felid",
+      "string.base": "{{#label}} most be string",
+      "string.empty": "{{#label}} cannot be an empty field",
+      "string.min": "{{#label}} should have a minimum length of 4",
+    }),
+    password: Joi.string()
+      .min(8)
+      .max(30)
+      .pattern(new RegExp("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]+$"))
+      .required()
+      .messages({
+        "any.required": "{{#label}} is required felid",
+        "string.pattern.base":
+          "{{#label}} must contain at least one letter and one number",
+        "string.base": "{{#label}} most be string",
+        "string.empty": "{{#label}} cannot be an empty field",
+        "string.min": "{{#label}} should have a minimum length of 8",
+        "string.max": "{{#label}} should have a minimum length of 30",
+      }),
+    confirmPassword: Joi.any()
+      .required()
+      .equal(Joi.ref("password"))
+      .messages({ "any.only": "{{#label}} does not match" }),
+  });
+
   const signUpFormik = useFormik({
     initialValues: {
+      fullName: "",
+      email: "",
       user: "",
       password: "",
       confirmPassword: "",
     },
+    validate: (values) => validateSchema(schema, values),
     onSubmit: (value) => {
       console.log(value);
     },
@@ -27,10 +74,24 @@ const SignUp = () => {
       >
         <FormikTextInput
           formik={signUpFormik}
+          name="fullName"
+          label="Full Name"
+          placeholder="Enter your Full Name"
+          innerIcon={{ icon: <FaUserTie />, position: "left" }}
+        />
+        <FormikTextInput
+          formik={signUpFormik}
+          name="email"
+          label="Email"
+          placeholder="Enter your Email"
+          innerIcon={{ icon: <LuMail />, position: "left" }}
+        />
+        <FormikTextInput
+          formik={signUpFormik}
           name="user"
           label="User"
           placeholder="Enter your User"
-          innerIcon={{ icon: <FaUserTie />, position: "left" }}
+          innerIcon={{ icon: <LuMail />, position: "left" }}
         />
         <FormikTextInput
           formik={signUpFormik}

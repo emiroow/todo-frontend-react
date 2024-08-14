@@ -95,6 +95,7 @@ const Login = () => {
           formik={loginFormik}
           name="password"
           label="Password"
+          type="password"
           placeholder="Enter your Password"
           innerIcon={{ icon: <FaKey />, position: "left" }}
         />
@@ -102,7 +103,11 @@ const Login = () => {
           type="submit"
           className="btn btn-secondary max-lg:btn-sm text-md"
         >
-          Login
+          {loginMutation.isPending ? (
+            <span className="loading loading-spinner loading-md text-white"></span>
+          ) : (
+            "Login"
+          )}
         </button>
         <Link
           to={"/auth/signup"}

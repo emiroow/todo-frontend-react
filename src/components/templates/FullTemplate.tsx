@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import SideMenu from "./components/SideMenu";
 
 const FullTemplate = () => {
   const isLogin = useAuth((state) => state.auth.isLogin);
@@ -13,10 +14,13 @@ const FullTemplate = () => {
   }, [isLogin]);
 
   return (
-    <div className="drawer">
-      <div className="drawer-content flex flex-col">
+    <div className="w-full flex flex-row">
+      <SideMenu />
+      <div className="w-full h-max">
         <Navbar />
-        <Outlet />
+        <div className="w-full h-[88vh] px-4 py-2">
+          <Outlet />
+        </div>
         <Footer />
       </div>
     </div>

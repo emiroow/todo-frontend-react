@@ -12,6 +12,7 @@ interface Props {
   readOnly?: boolean;
   className?: string;
   required?: boolean;
+  type?: "password" | "text";
   innerButton?: {
     onSubmit?: () => void;
     icon: any;
@@ -34,6 +35,7 @@ const FormikTextInput: FC<Props> = ({
   readOnly,
   label,
   required = true,
+  type,
 }) => {
   return (
     // super compo 😎
@@ -63,7 +65,7 @@ const FormikTextInput: FC<Props> = ({
         )}
         {/* input */}
         <input
-          type="text"
+          type={type}
           name={name}
           id={name}
           className="grow"

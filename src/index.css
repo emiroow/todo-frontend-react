@@ -1,3 +1,23 @@
+* {
+  font-family: "sansRegular";
+}
+@font-face {
+  font-family: "sansBold";
+  src: url("./asset/fonts/IRANSansWeb_Bold.ttf");
+}
+@font-face {
+  font-family: "sansMedium";
+  src: url("./asset/fonts/IRANSansWeb_Medium.ttf");
+}
+@font-face {
+  font-family: "sansRegular";
+  src: url("./asset/fonts/IRANSansWeb.ttf");
+}
+@font-face {
+  font-family: "sansLight";
+  src: url("./asset/fonts/IRANSansWeb_Light.ttf");
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
