@@ -1,6 +1,8 @@
+import { useTranslation } from "react-i18next";
 import { BiSolidEditAlt } from "react-icons/bi";
 
-const Dashboard = () => {
+const Board = () => {
+  const { t } = useTranslation();
   return (
     <div className="w-full">
       {/* Board Name */}
@@ -14,11 +16,11 @@ const Dashboard = () => {
         </button>
       </div>
       {/* search and Filter Inputs */}
-      <div className="w-full"></div>
+      <div className="w-full">{t("hi")}</div>
       {/* tasks */}
       <div className="w-full"></div>
     </div>
   );
 };
 
-export default Dashboard;
+export default Board;
