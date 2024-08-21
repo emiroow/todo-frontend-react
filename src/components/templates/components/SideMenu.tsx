@@ -12,8 +12,10 @@ const SideMenu = () => {
   return (
     <div
       className={`${
-        sideMenuIsOpen ? "w-[20%]" : "w-[4%]"
-      } h-[100vh] border-e border-gray-800 drop-shadow-2xl shadow-2xl transition-all duration-500`}
+        sideMenuIsOpen
+          ? "2xl:w-[20%] xl:w-[25%] lg:w-[27%] max-lg:hidden"
+          : "w-[4%]"
+      } h-[100vh] border-e border-gray-800 drop-shadow-2xl shadow-2xl transition-all duration-500 `}
     >
       <div className="w-full flex h-[7vh] relative">
         {sideMenuIsOpen && (

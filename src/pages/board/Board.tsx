@@ -1,12 +1,11 @@
-import { useTranslation } from "react-i18next";
 import { BiSolidEditAlt } from "react-icons/bi";
+import TargetCard from "./components/TargetCard";
 
 const Board = () => {
-  const { t } = useTranslation();
   return (
     <div className="w-full">
       {/* Board Name */}
-      <div className="w-full p-4 flex gap-3 items-center">
+      <div className="w-full py-5 flex gap-3 items-center">
         <span className="w-8 h-8 text-center items-center self-center justify-center flex rounded-full bg-secondary/30 drop-shadow-xl shadow-xl ">
           ❤️
         </span>
@@ -16,9 +15,17 @@ const Board = () => {
         </button>
       </div>
       {/* search and Filter Inputs */}
-      <div className="w-full">{t("hi")}</div>
-      {/* tasks */}
       <div className="w-full"></div>
+      {/* Targets */}
+      <div className="w-full flex gap-4 mt-1 pb-5 h-max overflow-x-auto ">
+        <TargetCard />
+        <TargetCard />
+        <TargetCard />
+        <TargetCard />
+        <TargetCard />
+        <TargetCard />
+        <TargetCard />
+      </div>
     </div>
   );
 };

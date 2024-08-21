@@ -1,11 +1,6 @@
-import { changeLanguage } from "@/utils/helpers/localizing.helper";
 import { useFormik } from "formik";
-import ReactCountryFlag from "react-country-flag";
-import { useTranslation } from "react-i18next";
-import { IoLanguage } from "react-icons/io5";
 
 const Navbar = () => {
-  const { i18n } = useTranslation();
   const formik = useFormik({
     initialValues: {},
     onSubmit: () => {},
@@ -28,79 +23,6 @@ const Navbar = () => {
         />
       </div> */}
       <div className="flex items-center flex-row gap-3">
-        {/* change Lang */}
-        <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-            <div className="indicator relative">
-              <IoLanguage className="text-2xl" />
-              <span className=" indicator-item">
-                {i18n.language === "fa" ? (
-                  <ReactCountryFlag
-                    countryCode="IR"
-                    svg
-                    style={{
-                      width: "1em",
-                      height: "1em",
-                    }}
-                    title="IR"
-                  />
-                ) : (
-                  <ReactCountryFlag
-                    countryCode="US"
-                    svg
-                    style={{
-                      width: "1em",
-                      height: "1em",
-                    }}
-                    title="US"
-                  />
-                )}
-              </span>
-            </div>
-          </div>
-          <ul
-            tabIndex={0}
-            role="button"
-            className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-          >
-            <li onClick={() => changeLanguage("en")}>
-              <a className="flex justify-between">
-                <span>en</span>
-                <span>
-                  <ReactCountryFlag
-                    countryCode="US"
-                    svg
-                    style={{
-                      width: "1em",
-                      height: "1em",
-                    }}
-                    title="US"
-                  />
-                </span>
-              </a>
-            </li>
-            <li
-              onClick={() => {
-                changeLanguage("fa");
-              }}
-            >
-              <a className="flex justify-between">
-                <span>fa</span>
-                <span>
-                  <ReactCountryFlag
-                    countryCode="IR"
-                    svg
-                    style={{
-                      width: "1em",
-                      height: "1em",
-                    }}
-                    title="IR"
-                  />
-                </span>
-              </a>
-            </li>
-          </ul>
-        </div>
         {/* Profile */}
         <div className="dropdown dropdown-end">
           <div
