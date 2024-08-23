@@ -3,6 +3,7 @@ import useSetting from "@/store/useSetting";
 import { IoLogOutOutline } from "react-icons/io5";
 import { MdHistory } from "react-icons/md";
 import { RiMenu3Fill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const SideMenu = () => {
   const { setAsideMenuStatus, settings } = useSetting();
@@ -13,9 +14,9 @@ const SideMenu = () => {
     <div
       className={`${
         sideMenuIsOpen
-          ? "2xl:w-[20%] xl:w-[25%] lg:w-[27%] max-lg:hidden"
-          : "w-[4%]"
-      } h-[100vh] border-e border-gray-800 drop-shadow-2xl shadow-2xl transition-all duration-500 `}
+          ? "2xl:w-[20%] xl:w-[25%] lg:w-[27%] "
+          : "2xl:w-[4.5%] xl:w-[5%] lg:w-[7%]"
+      } h-[100vh] border-e border-gray-800 drop-shadow-2xl shadow-2xl transition-all duration-500 max-lg:hidden`}
     >
       <div className="w-full flex h-[7vh] relative">
         {sideMenuIsOpen && (
@@ -40,7 +41,7 @@ const SideMenu = () => {
           sideMenuIsOpen ? "opacity-100" : "opacity-0"
         } ${sideMenuIsOpen ? "block" : "hidden"}`}
       >
-        <ul className="w-full menu menu-lg rounded-box mt-4 h-[85vh] ">
+        <ul className="w-full menu menu-lg rounded-box mt-4 h-[85vh] overflow-y-auto">
           <li>
             <details open>
               <summary>
@@ -76,6 +77,28 @@ const SideMenu = () => {
           </div>
         )}
       </div>
+
+      {!sideMenuIsOpen && (
+        <>
+          <div className="w-full h-[84vh]  duration-300 transition-opacity flex flex-col justify-start mt-5 gap-4">
+            <Link
+              to={""}
+              className="transition-all hover:bg-secondary/50 w-[85%] flex justify-end p-3 rounded-e-xl"
+            >
+              <MdHistory className="text-3xl" />
+            </Link>
+            <Link
+              to={""}
+              className="transition-all hover:bg-secondary/50 w-[85%] flex justify-end p-3 rounded-e-xl"
+            >
+              <MdHistory className="text-3xl" />
+            </Link>
+          </div>
+          <div onClick={() => logOut()} className="w-full cursor-pointer">
+            <IoLogOutOutline className="text-3xl h-[6.5vh] hover:text-secondary transition-all flex justify-center items-center self-center m-auto" />
+          </div>
+        </>
+      )}
     </div>
   );
 };

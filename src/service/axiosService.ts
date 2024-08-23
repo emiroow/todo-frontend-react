@@ -40,6 +40,10 @@ export const apiService = async <T>({
       if (error.response) {
         toast.error(error.response.data.massage);
       }
+      // net Error
+      if (error.code === "ERR_NETWORK") {
+        toast.error(error.message);
+      }
       return Promise.reject(error.response?.data);
     }
   );

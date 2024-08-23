@@ -17,10 +17,7 @@ const Board = () => {
       {/* search and Filter Inputs */}
       <div className="w-full"></div>
       {/* Targets */}
-      <div className="w-full flex gap-4 mt-1 pb-5 h-max overflow-x-auto ">
-        <TargetCard />
-        <TargetCard />
-        <TargetCard />
+      <div className="w-full flex gap-4 mt-1 pb-5 h-max overflow-x-auto scroll-smooth">
         <TargetCard />
         <TargetCard />
         <TargetCard />

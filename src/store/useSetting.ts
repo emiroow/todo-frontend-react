@@ -14,7 +14,6 @@ interface Store {
 }
 
 const localStorageSetting = getHashedLocalStorage<Data>("TodoSettings");
-console.log(localStorageSetting);
 const useSetting = create<Store>((set) => ({
   settings: {
     sideMenuIsOpen: localStorageSetting.sideMenuIsOpen ?? true,

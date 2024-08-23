@@ -78,7 +78,7 @@ const Login = () => {
     // container
     <div className="w-full flex-col h-[100vh] flex justify-center items-center">
       {/* box */}
-      <p className="mb-5 font-bold text-2xl">Login</p>
+      <p className="mb-5 font-bold text-2xl">ورود</p>
       <form
         onSubmit={loginFormik.handleSubmit}
         onReset={loginFormik.handleReset}
@@ -87,33 +87,34 @@ const Login = () => {
         <FormikTextInput
           formik={loginFormik}
           name="user"
-          label="User"
-          placeholder="Enter your User"
+          label="نام کاربری"
+          placeholder="نام کاربری خود را وارد کنید"
           innerIcon={{ icon: <FaUserTie />, position: "left" }}
         />
         <FormikTextInput
           formik={loginFormik}
           name="password"
-          label="Password"
+          label="پسورد"
           type="password"
-          placeholder="Enter your Password"
+          placeholder="پسورد خود را وارد کنید"
           innerIcon={{ icon: <FaKey />, position: "left" }}
         />
         <button
           type="submit"
-          className="btn btn-secondary max-lg:btn-sm text-md"
+          className="btn btn-secondary max-lg:btn-sm text-md btn"
+          disabled={loginMutation.isPending}
         >
           {loginMutation.isPending ? (
             <span className="loading loading-spinner loading-md text-white"></span>
           ) : (
-            "Login"
+            <span className="text-white">ورود</span>
           )}
         </button>
         <Link
           to={"/auth/signup"}
-          className="text-sm text-info text-center underline link-hover"
+          className="text-sm text-info text-center link-hover"
         >
-          Create Account
+          ایجاد حساب کابری
         </Link>
       </form>
     </div>
