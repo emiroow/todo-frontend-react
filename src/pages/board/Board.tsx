@@ -6,7 +6,7 @@ const Board = () => {
     <div className="w-full">
       {/* Board Name */}
       <div className="w-full py-5 flex gap-3 items-center">
-        <span className="w-8 h-8 text-center items-center self-center justify-center flex rounded-full bg-secondary/30 drop-shadow-xl shadow-xl ">
+        <span className="w-10 h-10 text-center items-center self-center justify-center flex rounded-full bg-secondary/30 drop-shadow-xl shadow-xl glass ">
           ❤️
         </span>
         <span className="text-2xl text-secondary font-sansBold">احبر</span>
@@ -17,7 +17,7 @@ const Board = () => {
       {/* search and Filter Inputs */}
       <div className="w-full"></div>
       {/* Targets */}
-      <div className="w-full flex gap-4 mt-1 pb-5 h-max overflow-x-auto scroll-smooth">
+      <div className="w-full px-2 flex gap-3 mt-1 pb-5 h-max overflow-x-auto scroll-smooth">
         <TargetCard />
         <TargetCard />
         <TargetCard />

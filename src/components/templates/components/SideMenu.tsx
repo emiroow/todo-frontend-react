@@ -1,8 +1,12 @@
 import useAuth from "@/store/useAuth";
 import useSetting from "@/store/useSetting";
 import { IoLogOutOutline } from "react-icons/io5";
-import { MdHistory } from "react-icons/md";
-import { RiMenu3Fill } from "react-icons/ri";
+import { MdCalendarToday, MdDashboard, MdHistory } from "react-icons/md";
+import {
+  RiDashboard2Line,
+  RiMenu3Fill,
+  RiTimerFlashLine,
+} from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 const SideMenu = () => {
@@ -41,27 +45,45 @@ const SideMenu = () => {
           sideMenuIsOpen ? "opacity-100" : "opacity-0"
         } ${sideMenuIsOpen ? "block" : "hidden"}`}
       >
-        <ul className="w-full menu menu-lg rounded-box mt-4 h-[85vh] overflow-y-auto">
+        <ul className="w-full menu menu-lg rounded-box mt-4 h-[85vh] overflow-y-auto gap-2">
+          <li className="hover:text-secondary">
+            <span>
+              <RiDashboard2Line className="text-2xl" />
+              <span>داشبورد</span>
+            </span>
+          </li>
           <li>
             <details open>
-              <summary>
+              <summary className="hover:text-secondary">
                 <MdHistory className="text-2xl" />
-                <span>تست</span>
+                <span>تاریخچه تارگت ها</span>
               </summary>
               <ul>
-                <li>
-                  <a>Submenu 1</a>
+                <li className="hover:text-secondary">
+                  <a>تارگت 1</a>
                 </li>
-                <li>
-                  <a>Submenu 2</a>
+                <li className="hover:text-secondary">
+                  <a>تارگت 2</a>
                 </li>
               </ul>
             </details>
           </li>
-          <li>
+          <li className="hover:text-secondary">
             <span>
-              <MdHistory className="text-2xl" />
-              <span>تست</span>
+              <MdDashboard className="text-2xl" />
+              <span>بورد های من</span>
+            </span>
+          </li>
+          <li className="hover:text-secondary">
+            <span>
+              <MdCalendarToday className="text-2xl" />
+              <span>برنامه ی روزانه</span>
+            </span>
+          </li>
+          <li className="hover:text-secondary">
+            <span>
+              <RiTimerFlashLine className="text-2xl" />
+              <span>تایمر</span>
             </span>
           </li>
         </ul>
