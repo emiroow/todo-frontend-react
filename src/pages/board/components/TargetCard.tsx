@@ -1,7 +1,7 @@
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaTasks } from "react-icons/fa";
+import { FaListUl, FaTasks } from "react-icons/fa";
 import { IoTimeOutline } from "react-icons/io5";
-import SampleImage from "../../../asset/images/simple-cat.jpg";
+import { PiListMagnifyingGlassBold } from "react-icons/pi";
 const TargetCard = () => {
   return (
     <div className="flex-shrink-0 2xl:w-[20%] h-max xl:w-[30%] lg:w-[30%] md:w-[35%] sm:w-[40%] w-[95%]">
@@ -28,13 +28,6 @@ const TargetCard = () => {
             سختی
           </div>
         </div>
-
-        {/* image */}
-        <img
-          className="w-max rounded-xl mt-4 drop-shadow-md shadow-black/30 shadow-md"
-          src={SampleImage}
-          alt="image"
-        />
 
         <p className="text-sm mt-3">
           لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
@@ -64,10 +57,24 @@ const TargetCard = () => {
 
         {/* target info */}
         <div className="w-full mt-4">
-          <div className="flex flex-col gap-3 mt-2">
+          <div className="flex flex-col gap-2 mt-2">
             <section className="flex items-center gap-2">
-              <FaTasks />
-              <span className="text-sm">تعداد</span>
+              <FaListUl className="text-primary" />
+              <span className="text-sm">کل اهداف</span>
+              <span>:</span>
+              <span className="text-sm">1</span>
+            </section>
+            <section className="flex items-center gap-2">
+              <FaTasks className="text-success" />
+              <span className="text-sm">اهداف انجام شده</span>
+              <span>:</span>
+              <span className="text-sm">1</span>
+            </section>
+            <section className="flex items-center gap-2">
+              <PiListMagnifyingGlassBold className="text-xl text-warning" />
+              <span className="text-sm">اهداف در انتظار انجام</span>
+              <span>:</span>
+              <span className="text-sm">1</span>
             </section>
           </div>
         </div>
