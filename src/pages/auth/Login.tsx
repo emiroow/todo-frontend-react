@@ -18,10 +18,9 @@ const Login = () => {
 
   const schema = Joi.object({
     user: Joi.string().min(4).required().messages({
-      "any.required": "user is required felid",
-      "string.base": "user most be string",
-      "string.empty": "user cannot be an empty field",
-      "string.min": "user should have a minimum length of 4",
+      "any.required": "نام کاربری فیلد اجباری می باشد",
+      "string.empty": "نام کاربری فیلد اجباری می باشد",
+      "string.min": "نام کابری باید بیشتر از 4 کارکتر باشد",
     }),
     password: Joi.string()
       .min(8)
@@ -29,13 +28,11 @@ const Login = () => {
       .pattern(new RegExp("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]+$"))
       .required()
       .messages({
-        "any.required": "password is required felid",
-        "string.pattern.base":
-          "password must contain at least one letter and one number",
-        "string.base": "password most be string",
-        "string.empty": "password cannot be an empty field",
-        "string.min": "password should have a minimum length of 8",
-        "string.max": "password should have a minimum length of 30",
+        "any.required": "رمز عبور فیلد اجباری می باشد",
+        "string.pattern.base": "رمز عبور باید حداقل یک حرف و یک عدد داشته باشد",
+        "string.empty": "رمز عبور فیلد اجباری می باشد",
+        "string.min": "رمز عبور باید بیشتر از 8 کارکتر باشد",
+        "string.max": "رمز عبور باید کمتر از 30 کارکتر باشد",
       }),
   });
 
@@ -61,8 +58,8 @@ const Login = () => {
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: (res) => {
-      toast.success("Login Success !");
       if (res.status) {
+        toast.success("با موفقیت وارد شدید");
         setHashedLocalStorage("TodoApp", res.data);
         setLoginStatus(true);
         setUser(res.data?.user);

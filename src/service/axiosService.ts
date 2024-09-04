@@ -1,3 +1,5 @@
+import { ILoginResponse } from "@/interfaces/response/ILogin";
+import { getHashedLocalStorage } from "@/utils/helpers/hash.helper";
 import axios, {
   AxiosError,
   AxiosResponse,
@@ -18,7 +20,7 @@ export const apiService = async <T>({
   Option?: IAxiosOptions<any>;
 }): Promise<IResponse<T>> => {
   const axiosInstance = axios.create();
-
+  const token = getHashedLocalStorage<ILoginResponse>("TodoApp").token;
   axiosInstance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
       const token = localStorage.getItem("token");
@@ -50,11 +52,12 @@ export const apiService = async <T>({
 
   const response = await axiosInstance.request({
     baseURL: import.meta.env.VITE_BASE_URL,
-    headers: {
-      "Content-Type": "application/json",
-    },
     method: method,
     url: path,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     ...Option,
   });
 

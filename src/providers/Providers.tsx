@@ -20,6 +20,7 @@ const Providers = ({ children }: { children: React.ReactElement }) => {
         draggable
         pauseOnHover
         theme="dark"
+        toastStyle={{ direction: "rtl" }}
       />
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </Suspense>

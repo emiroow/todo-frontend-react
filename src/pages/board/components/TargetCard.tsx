@@ -1,3 +1,4 @@
+import { apiService } from "@/service/axiosService";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaListUl, FaTasks } from "react-icons/fa";
 import { IoTimeOutline } from "react-icons/io5";
@@ -78,6 +79,22 @@ const TargetCard = () => {
             </section>
           </div>
         </div>
+
+        <button
+          className="btn btn-square btn-error"
+          onClick={async () => {
+            const fd = new FormData();
+            fd.append("name", "test");
+            const test = await apiService({
+              method: "POST",
+              path: "/upload/create",
+              Option: { data: fd },
+            });
+            console.log(test);
+          }}
+        >
+          test Api
+        </button>
 
         {/* status */}
         <div className="w-full flex justify-end items-center mt-4">

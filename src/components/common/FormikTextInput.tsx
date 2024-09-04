@@ -74,7 +74,7 @@ const FormikTextInput: FC<Props> = ({
             else formik.setFieldValue(name, "");
             onExtraChange?.();
           }}
-          placeholder={placeholder}
+          placeholder={placeholder ?? `${label} را وارد کنید`}
           disabled={disable}
           readOnly={readOnly}
         />
