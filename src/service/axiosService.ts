@@ -39,8 +39,13 @@ export const apiService = async <T>({
       return response;
     },
     (error: AxiosError<IResponse<T>>) => {
-      if (error.response) {
-        toast.error(error.response.data.massage);
+      if (error.response?.status === 401) {
+        window.location.href = "/auth/login";
+        localStorage.removeItem("TodoApp");
+      }
+
+      if (error) {
+        toast.error(error.response?.data.massage);
       }
       // net Error
       if (error.code === "ERR_NETWORK") {

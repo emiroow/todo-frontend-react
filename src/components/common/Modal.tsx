@@ -11,6 +11,7 @@ interface Props {
   onCloseESC?: () => void;
   children: React.ReactElement;
   contentClass?: string;
+  size?: "w-1/5" | "w-2/5" | "w-3/5" | "w-4/5" | "w-5/5";
 }
 const Modal: FC<Props> = ({
   modalState,
@@ -22,6 +23,7 @@ const Modal: FC<Props> = ({
   onCloseESC,
   onCancel,
   onSubmit,
+  size,
 }) => {
   if (modalState) {
     document.body.style.overflow = "hidden";
@@ -29,13 +31,17 @@ const Modal: FC<Props> = ({
     document.body.style.overflow = "auto";
   }
   return (
-    <div className="">
+    <>
       {modalState && (
         <>
           {/* container */}
           <div className="w-full h-[100vh] overflow-x-hidden overflow-y-auto fixed justify-center items-center content-center inset-0 z-30 outline-none focus:outline-none bg-black/40 top-0 left-0">
             {/* box */}
-            <div className="w-[95%] md:w-[60%] lg:w-[50%] 2xl:w-[30%] bg-base-300 border-secondary border-2 rounded-xl z-50 m-auto drop-shadow-2xl shadow-2xl shadow-black ">
+            <div
+              className={`max-sm:w-[95%] ${
+                size ? `${size}` : "md:w-[60%] lg:w-[50%] 2xl:w-[30%]"
+              } bg-base-300 border-secondary border-2 rounded-xl z-50 m-auto drop-shadow-2xl shadow-2xl shadow-black `}
+            >
               {/* head */}
               {title || onCloseESC ? (
                 <div
@@ -101,7 +107,7 @@ const Modal: FC<Props> = ({
           </div>
         </>
       )}
-    </div>
+    </>
   );
 };
 

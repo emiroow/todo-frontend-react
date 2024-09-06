@@ -47,10 +47,10 @@ const SideMenu = () => {
       >
         <ul className="w-full menu menu-lg rounded-box mt-4 h-[85vh] overflow-y-auto gap-2">
           <li className="hover:text-secondary">
-            <span>
+            <Link to={"/"}>
               <RiDashboard2Line className="text-2xl" />
               <span>داشبورد</span>
-            </span>
+            </Link>
           </li>
           <li>
             <details open>
@@ -69,10 +69,10 @@ const SideMenu = () => {
             </details>
           </li>
           <li className="hover:text-secondary">
-            <span>
+            <Link to={"/boards"}>
               <MdDashboard className="text-2xl" />
               <span>بورد های من</span>
-            </span>
+            </Link>
           </li>
           <li className="hover:text-secondary">
             <span>
@@ -104,16 +104,28 @@ const SideMenu = () => {
         <>
           <div className="w-full h-[84vh]  duration-300 transition-opacity flex flex-col justify-start mt-5 gap-4">
             <Link
-              to={""}
+              to={"/"}
               className="transition-all hover:bg-secondary/50 w-[85%] flex justify-end p-3 rounded-e-xl"
             >
-              <MdHistory className="text-3xl" />
+              <RiDashboard2Line className="text-3xl" />
+            </Link>
+            <Link
+              to={"/boards"}
+              className="transition-all hover:bg-secondary/50 w-[85%] flex justify-end p-3 rounded-e-xl"
+            >
+              <MdDashboard className="text-3xl" />
             </Link>
             <Link
               to={""}
               className="transition-all hover:bg-secondary/50 w-[85%] flex justify-end p-3 rounded-e-xl"
             >
-              <MdHistory className="text-3xl" />
+              <MdCalendarToday className="text-3xl" />
+            </Link>
+            <Link
+              to={""}
+              className="transition-all hover:bg-secondary/50 w-[85%] flex justify-end p-3 rounded-e-xl"
+            >
+              <RiTimerFlashLine className="text-3xl" />
             </Link>
           </div>
           <div onClick={() => logOut()} className="w-full cursor-pointer">
