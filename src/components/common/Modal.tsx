@@ -39,13 +39,13 @@ const Modal: FC<Props> = ({
             {/* box */}
             <div
               className={`max-sm:w-[95%] ${
-                size ? `${size}` : "md:w-[60%] lg:w-[50%] 2xl:w-[30%]"
-              } bg-base-300 border-secondary border-2 rounded-xl z-50 m-auto drop-shadow-2xl shadow-2xl shadow-black `}
+                size ? `${size}` : "md:w-[60%] lg:w-[50%] 2xl:w-[40%]"
+              } bg-base-300 border-secondary border-2 rounded-xl z-50 m-auto drop-shadow-lg shadow-lg shadow-black/30 `}
             >
               {/* head */}
               {title || onCloseESC ? (
                 <div
-                  className={`p-3 border-secondary flex flex-row  justify-end items-center ${
+                  className={`p-4 border-secondary flex flex-row  justify-end items-center ${
                     !title === true && !onCloseESC === false
                       ? ""
                       : !title === false && !onCloseESC === true
@@ -55,7 +55,7 @@ const Modal: FC<Props> = ({
                 >
                   {/* title */}
                   {title && (
-                    <h3 className="font-bold text-xl w-full">{title}</h3>
+                    <h3 className="font-bold text-md w-full">{title}</h3>
                   )}
                   {/* ESC btn */}
                   {onCloseESC && (
@@ -77,13 +77,19 @@ const Modal: FC<Props> = ({
               {/* action btn,s */}
               <div className="w-full flex justify-end gap-3 p-5">
                 {onSubmit && (
-                  <button onClick={onSubmit} className="btn btn-success btn-sm">
-                    Submit
+                  <button
+                    onClick={onSubmit}
+                    className="btn btn-success btn-sm text-white"
+                  >
+                    ثبت
                   </button>
                 )}
                 {onCancel && (
-                  <button onClick={onCancel} className="btn btn-error btn-sm">
-                    Cancel
+                  <button
+                    onClick={onCancel}
+                    className="btn btn-error btn-sm text-white"
+                  >
+                    انصراف
                   </button>
                 )}
                 {onCloseButton && (
@@ -92,16 +98,18 @@ const Modal: FC<Props> = ({
                       modalStateSetter(false);
                       onCloseButton();
                     }}
-                    className="btn btn-secondary btn-sm"
+                    className="btn btn-secondary btn-sm text-white"
                   >
-                    Close
+                    بستن
                   </button>
                 )}
               </div>
             </div>
             {/* back Drop */}
             <div
-              onClick={() => modalStateSetter(false)}
+              onClick={() => {
+                modalStateSetter(false);
+              }}
               className=" w-full h-full fixed top-0 -z-40"
             ></div>
           </div>

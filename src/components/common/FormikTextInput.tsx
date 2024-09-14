@@ -20,6 +20,8 @@ interface Props {
     position: "right" | "left";
   };
   onExtraChange?: () => void;
+  maxLength?: number;
+  minLength?: number;
 }
 
 const FormikTextInput: FC<Props> = ({
@@ -36,6 +38,8 @@ const FormikTextInput: FC<Props> = ({
   label,
   required = true,
   type,
+  maxLength,
+  minLength,
 }) => {
   return (
     // super compo 😎
@@ -77,6 +81,8 @@ const FormikTextInput: FC<Props> = ({
           placeholder={placeholder ?? `${label} را وارد کنید`}
           disabled={disable}
           readOnly={readOnly}
+          maxLength={maxLength}
+          minLength={minLength}
         />
         {/* inner btn  pos right*/}
         {innerButton && innerButton.position === "right" && (
