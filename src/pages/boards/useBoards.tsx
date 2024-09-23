@@ -1,14 +1,15 @@
 import { IBoard } from "@/interfaces/response/IBoard";
 import { apiService } from "@/service/axiosService";
 import { validateSchema } from "@/utils/common/joiValidator";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import Joi from "joi";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const useBoards = () => {
   const [createBoardModal, setCreateBoardModal] = useState(false);
-
+  const queryClient = useQueryClient();
   const getBoards = async () => {
     const data = await apiService<IBoard[]>({
       path: "/board/list",
@@ -21,10 +22,10 @@ const useBoards = () => {
     queryFn: getBoards,
   });
   const schema = Joi.object({
-    // backgroundImageUrl: Joi.string().required().messages({
-    //   "any.required": "عکس بکگراند فیلد اجباری می باشد",
-    //   "string.empty": "عکس بکگراند فیلد اجباری می باشد",
-    // }),
+    backgroundImageUrl: Joi.string().required().messages({
+      "any.required": "عکس بکگراند فیلد اجباری می باشد",
+      "string.empty": "عکس بکگراند فیلد اجباری می باشد",
+    }),
     emoji: Joi.string()
       .pattern(/^\p{Emoji}$/u)
       .required()
@@ -52,7 +53,27 @@ const useBoards = () => {
       name: "",
     },
     onSubmit: (data) => {
-      console.log(data);
+      createBoardMutation.mutate(data);
+    },
+  });
+
+  const createBoard = async (body: IBoard) => {
+    const { data } = await apiService<any>({
+      path: "board/create",
+      method: "POST",
+      Option: { data: body },
+    });
+    return data;
+  };
+  const createBoardMutation = useMutation({
+    mutationFn: createBoard,
+    onSuccess: (data) => {
+      createBoardFormik.resetForm();
+      queryClient.fetchQuery({ queryKey: ["GET_BOARDS"] });
+      setCreateBoardModal(false);
+      if (data.status) {
+        toast.success(data.massage);
+      }
     },
   });
 
@@ -62,6 +83,7 @@ const useBoards = () => {
     createBoardModal,
     setCreateBoardModal,
     createBoardFormik,
+    createBoardMutation,
   };
 };
 

@@ -11,6 +11,7 @@ interface Props {
   onCloseESC?: () => void;
   children: React.ReactElement;
   contentClass?: string;
+  submitLoading?: boolean;
   size?: "w-1/5" | "w-2/5" | "w-3/5" | "w-4/5" | "w-5/5";
 }
 const Modal: FC<Props> = ({
@@ -24,6 +25,7 @@ const Modal: FC<Props> = ({
   onCancel,
   onSubmit,
   size,
+  submitLoading = false,
 }) => {
   if (modalState) {
     document.body.style.overflow = "hidden";
@@ -80,8 +82,13 @@ const Modal: FC<Props> = ({
                   <button
                     onClick={onSubmit}
                     className="btn btn-success btn-sm text-white"
+                    type="submit"
                   >
-                    ثبت
+                    {submitLoading ? (
+                      <span className="loading loading-spinner loading-md text-white"></span>
+                    ) : (
+                      "ثبت"
+                    )}
                   </button>
                 )}
                 {onCancel && (

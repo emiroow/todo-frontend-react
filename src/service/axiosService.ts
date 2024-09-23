@@ -55,15 +55,19 @@ export const apiService = async <T>({
     }
   );
 
+  // Merging headers
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+    ...(Option?.headers || {}), // Merge custom headers from Option
+  };
+
   const response = await axiosInstance.request({
     baseURL: import.meta.env.VITE_BASE_URL,
     method: method,
     url: path,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
     ...Option,
+    headers,
   });
 
   return response.data;

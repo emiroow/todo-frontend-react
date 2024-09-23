@@ -37,9 +37,7 @@ const Board: FC<{ data: IBoard }> = ({ data }) => {
       <div
         className="absolute inset-0 bg-cover bg-center brightness-50 transition-transform duration-300 transform group-hover:scale-125"
         style={{
-          backgroundImage: `url(${import.meta.env.VITE_FILE_BASE_URL}${
-            data.backgroundImageUrl
-          })`,
+          backgroundImage: `url(${data.backgroundImageUrl})`,
         }}
       ></div>
     </div>

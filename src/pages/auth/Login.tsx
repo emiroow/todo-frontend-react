@@ -59,7 +59,7 @@ const Login = () => {
     mutationFn: login,
     onSuccess: (res) => {
       if (res.status) {
-        toast.success("با موفقیت وارد شدید");
+        toast.success(res.massage);
         setHashedLocalStorage("TodoApp", res.data);
         setLoginStatus(true);
         setUser(res.data?.user);
