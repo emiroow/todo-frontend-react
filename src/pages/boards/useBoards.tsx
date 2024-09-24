@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 const useBoards = () => {
   const [createBoardModal, setCreateBoardModal] = useState(false);
   const queryClient = useQueryClient();
+
   const getBoards = async () => {
     const data = await apiService<IBoard[]>({
       path: "/board/list",
@@ -21,6 +22,7 @@ const useBoards = () => {
     queryKey: ["GET_BOARDS"],
     queryFn: getBoards,
   });
+
   const schema = Joi.object({
     backgroundImageUrl: Joi.string().required().messages({
       "any.required": "عکس بکگراند فیلد اجباری می باشد",
@@ -44,13 +46,15 @@ const useBoards = () => {
       "string.empty": "تاریخ فیلد اجباری می باشد",
     }),
   });
-  const createBoardFormik = useFormik<IBoard>({
+
+  const createBoardFormik = useFormik<any>({
     validate: (value) => validateSchema(schema, value),
     initialValues: {
       backgroundImageUrl: "",
       date: "",
       emoji: "",
       name: "",
+      selectBackgroundImageUrl: "",
     },
     onSubmit: (data) => {
       createBoardMutation.mutate(data);
@@ -77,6 +81,19 @@ const useBoards = () => {
     },
   });
 
+  const getUploadList = async () => {
+    const data = await apiService<any>({
+      path: "upload/list",
+      method: "GET",
+    });
+    return data;
+  };
+  const { data: uploads } = useQuery({
+    queryKey: ["GET_UPLOADS", createBoardModal],
+    queryFn: getUploadList,
+    refetchOnMount: true,
+  });
+
   return {
     boards,
     isLoading,
@@ -84,6 +101,8 @@ const useBoards = () => {
     setCreateBoardModal,
     createBoardFormik,
     createBoardMutation,
+    uploads,
+    queryClient,
   };
 };
 

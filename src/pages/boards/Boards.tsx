@@ -1,5 +1,6 @@
 import FormikDatePickerInput from "@/components/common/FormikDatePickerInput";
 import FormikError from "@/components/common/FormikError";
+import FormikSelectInput from "@/components/common/FormikSelectInput";
 import FormikTextInput from "@/components/common/FormikTextInput";
 import Modal from "@/components/common/Modal";
 import { apiService } from "@/service/axiosService";
@@ -21,6 +22,8 @@ const Boards = () => {
     isLoading,
     createBoardFormik,
     createBoardMutation,
+    uploads,
+    queryClient,
   } = useBoards();
 
   const [uploadLoader, setLoader] = useState(false);
@@ -81,7 +84,7 @@ const Boards = () => {
                     <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-300 transform group-hover:scale-125 rounded-b-lg"
                       style={{
-                        backgroundImage: `url(${createBoardFormik.values.backgroundImageUrl})`,
+                        backgroundImage: `url("${createBoardFormik.values.backgroundImageUrl}")`,
                       }}
                     ></div>
                   </div>
@@ -92,15 +95,20 @@ const Boards = () => {
                 <button
                   onClick={() => {
                     createBoardFormik.setFieldValue("backgroundImageUrl", "");
+                    createBoardFormik.setFieldValue(
+                      "selectBackgroundImageUrl",
+                      ""
+                    );
+                    queryClient.refetchQueries({ queryKey: ["GET_UPLOADS"] });
                   }}
-                  className="btn btn-xs btn-circle btn-error absolute top-14 left-3 z-50"
+                  className="btn btn-outline btn-xs btn-circle btn-error absolute top-14 left-3 z-50"
                 >
                   <MdClose />
                 </button>
               )}
               <input
+                disabled={!!createBoardFormik.values.backgroundImageUrl}
                 onChange={async (event) => {
-                  console.log(createBoardFormik.values);
                   if (event.target.files && event.target.files[0]) {
                     const img = event.target.files[0];
                     const fd = new FormData();
@@ -147,6 +155,25 @@ const Boards = () => {
             </div>
             <FormikError name="backgroundImageUrl" formik={createBoardFormik} />
           </div>
+          <FormikSelectInput
+            options={
+              uploads?.data?.map((item: any) => {
+                return { label: item.name, value: item.url };
+              }) || []
+            }
+            formik={createBoardFormik}
+            name="selectBackgroundImageUrl"
+            label="انتخاب عکس"
+            placeholder="عکس مورد نظر خودرا انتخاب کنید"
+            className="sm:col-span-3"
+            disable={!!createBoardFormik.values.backgroundImageUrl}
+            onExtraChange={(e) => {
+              const fullUrl = `${import.meta.env.VITE_FILE_BASE_URL}${
+                e.target.value
+              }`;
+              createBoardFormik.setFieldValue("backgroundImageUrl", fullUrl);
+            }}
+          />
         </div>
       </Modal>
     </>
