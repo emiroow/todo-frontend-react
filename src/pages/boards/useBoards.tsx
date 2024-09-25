@@ -1,4 +1,4 @@
-import { IBoard } from "@/interfaces/response/IBoard";
+import { IBoardResponse } from "@/interfaces/response/IBoard";
 import { apiService } from "@/service/axiosService";
 import { validateSchema } from "@/utils/common/joiValidator";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -12,7 +12,7 @@ const useBoards = () => {
   const queryClient = useQueryClient();
 
   const getBoards = async () => {
-    const data = await apiService<IBoard[]>({
+    const data = await apiService<IBoardResponse>({
       path: "/board/list",
       method: "GET",
     });
@@ -45,6 +45,9 @@ const useBoards = () => {
       "any.required": "تاریخ فیلد اجباری می باشد",
       "string.empty": "تاریخ فیلد اجباری می باشد",
     }),
+    selectBackgroundImageUrl: Joi.allow("").optional().messages({
+      "string.base": "آدرس بکگراند باید یک رشته باشد",
+    }),
   });
 
   const createBoardFormik = useFormik<any>({
@@ -57,11 +60,12 @@ const useBoards = () => {
       selectBackgroundImageUrl: "",
     },
     onSubmit: (data) => {
+      delete data.selectBackgroundImageUrl;
       createBoardMutation.mutate(data);
     },
   });
 
-  const createBoard = async (body: IBoard) => {
+  const createBoard = async (body: any) => {
     const { data } = await apiService<any>({
       path: "board/create",
       method: "POST",

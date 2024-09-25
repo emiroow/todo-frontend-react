@@ -33,7 +33,7 @@ const Boards = () => {
         {isLoading ? (
           <BoardSkeleton />
         ) : (
-          boards?.data?.map((item, index) => {
+          boards?.data?.boardList?.map((item, index) => {
             return <Board key={index} data={item} />;
           })
         )}

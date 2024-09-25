@@ -1,8 +1,10 @@
-import { IBoard } from "@/interfaces/response/IBoard";
+import { IBoardResponse } from "@/interfaces/response/IBoard";
 import * as moment from "jalali-moment";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
-const Board: FC<{ data: IBoard }> = ({ data }) => {
+const Board: FC<{ data: NonNullable<IBoardResponse["boardList"]>[number] }> = ({
+  data,
+}) => {
   const navigate = useNavigate();
   return (
     <div
@@ -21,14 +23,14 @@ const Board: FC<{ data: IBoard }> = ({ data }) => {
         </div>
         <div className="w-full">
           <span className="flex justify-between">
-            <span>تعداد تارگت ها</span>
-            <span>0</span>
+            <span>تعداد اهداف</span>
+            <span>{0}</span>
           </span>
         </div>
         <div className="w-full text-left">
           <span className="font-sansLight text-sm">
             {moment
-              .from(data.date, "YYYY/MM/DD")
+              .from(data?.date || "", "YYYY/MM/DD")
               .locale("fa")
               .format("YYYY/MM/DD")}
           </span>
