@@ -8,7 +8,15 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 const useBoards = () => {
-  const [createBoardModal, setCreateBoardModal] = useState(false);
+  const [manageModal, setManageModal] = useState<{
+    modalState: boolean;
+    actionType?: "create" | "edit" | "";
+    board?: object;
+  }>({
+    modalState: false,
+    actionType: "",
+    board: {},
+  });
   const queryClient = useQueryClient();
 
   const getBoards = async () => {
@@ -78,7 +86,11 @@ const useBoards = () => {
     onSuccess: (data) => {
       createBoardFormik.resetForm();
       queryClient.fetchQuery({ queryKey: ["GET_BOARDS"] });
-      setCreateBoardModal(false);
+      setManageModal({
+        modalState: false,
+        actionType: "",
+        board: {},
+      });
       if (data.status) {
         toast.success(data.massage);
       }
@@ -93,7 +105,7 @@ const useBoards = () => {
     return data;
   };
   const { data: uploads } = useQuery({
-    queryKey: ["GET_UPLOADS", createBoardModal],
+    queryKey: ["GET_UPLOADS", manageModal],
     queryFn: getUploadList,
     refetchOnMount: true,
   });
@@ -101,8 +113,8 @@ const useBoards = () => {
   return {
     boards,
     isLoading,
-    createBoardModal,
-    setCreateBoardModal,
+    manageModal,
+    setManageModal,
     createBoardFormik,
     createBoardMutation,
     uploads,

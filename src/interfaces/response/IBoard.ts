@@ -11,5 +11,6 @@ export interface BoardList {
   user?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  totalTargets?: number;
   __v?: number;
 }

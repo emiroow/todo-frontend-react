@@ -1,7 +1,10 @@
 import { BiSolidEditAlt } from "react-icons/bi";
 import TargetCard from "./components/TargetCard";
+import useBoard from "./useBoard";
 
 const Board = () => {
+  const { targets } = useBoard();
+
   return (
     <div className="w-full">
       {/* Board Name */}
@@ -18,10 +21,9 @@ const Board = () => {
       <div className="w-full"></div>
       {/* Targets */}
       <div className="w-full px-2 flex gap-3 mt-1 pb-5 h-max overflow-x-auto scroll-smooth">
-        <TargetCard />
-        <TargetCard />
-        <TargetCard />
-        <TargetCard />
+        {targets?.data?.map((item, index: number) => {
+          return <TargetCard data={item} key={index} />;
+        })}
       </div>
     </div>
   );

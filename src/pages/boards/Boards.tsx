@@ -17,8 +17,8 @@ import useBoards from "./useBoards";
 const Boards = () => {
   const {
     boards,
-    createBoardModal,
-    setCreateBoardModal,
+    manageModal,
+    setManageModal,
     isLoading,
     createBoardFormik,
     createBoardMutation,
@@ -34,24 +34,44 @@ const Boards = () => {
           <BoardSkeleton />
         ) : (
           boards?.data?.boardList?.map((item, index) => {
-            return <Board key={index} data={item} />;
+            return (
+              <Board setManageModal={setManageModal} key={index} data={item} />
+            );
           })
         )}
         <AddBoard
           onClick={() => {
-            setCreateBoardModal(true);
+            setManageModal({
+              modalState: true,
+              actionType: "create",
+            });
           }}
         />
       </div>
 
+      {/* manage board Modal */}
       <Modal
-        title="ایجاد بورد جدید"
-        modalState={createBoardModal}
-        modalStateSetter={setCreateBoardModal}
-        onCloseESC={() => setCreateBoardModal(false)}
+        title={`${
+          manageModal.actionType === "create" ? "ایجاد" : "ویرایش"
+        } بورد ${manageModal.actionType === "create" ? "جدید" : ""}`}
+        modalState={manageModal.modalState}
+        modalStateSetter={setManageModal}
+        onCloseESC={() =>
+          setManageModal({
+            modalState: false,
+            actionType: "",
+            board: {},
+          })
+        }
         onSubmit={() => createBoardFormik.handleSubmit()}
         onCancel={() => createBoardFormik.resetForm()}
-        onCloseButton={() => setCreateBoardModal(false)}
+        onCloseButton={() =>
+          setManageModal({
+            modalState: false,
+            actionType: "",
+            board: {},
+          })
+        }
         submitLoading={createBoardMutation.isPending}
       >
         <div className="p-3 grid gap-3 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">

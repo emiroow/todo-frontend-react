@@ -1,9 +1,15 @@
+import { ITargetResponse } from "@/interfaces/response/ITarget";
 import { apiService } from "@/service/axiosService";
+import { FC } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaListUl, FaTasks } from "react-icons/fa";
 import { IoTimeOutline } from "react-icons/io5";
 import { PiListMagnifyingGlassBold } from "react-icons/pi";
-const TargetCard = () => {
+interface Props {
+  data: ITargetResponse;
+}
+
+const TargetCard: FC<Props> = () => {
   return (
     <div className="flex-shrink-0 2xl:w-[20%] h-max xl:w-[30%] lg:w-[30%] md:w-[35%] sm:w-[40%] w-[95%]">
       <div className="flex justify-between ps-4 mb-1 items-center">
