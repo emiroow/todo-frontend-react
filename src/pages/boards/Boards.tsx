@@ -20,10 +20,11 @@ const Boards = () => {
     manageModal,
     setManageModal,
     isLoading,
-    createBoardFormik,
+    BoardFormik,
     createBoardMutation,
     uploads,
     queryClient,
+    BoardInfoMutating,
   } = useBoards();
 
   const [uploadLoader, setLoader] = useState(false);
@@ -31,11 +32,26 @@ const Boards = () => {
     <>
       <div className="gap-3 grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 flex-wrap transition-all duration-300 delay-700 transform-gpu">
         {isLoading ? (
-          <BoardSkeleton />
+          <>
+            <BoardSkeleton />
+            <BoardSkeleton />
+            <BoardSkeleton />
+          </>
         ) : (
           boards?.data?.boardList?.map((item, index) => {
             return (
-              <Board setManageModal={setManageModal} key={index} data={item} />
+              <Board
+                editBoard={() => {
+                  BoardInfoMutating.mutate(item._id);
+                  setManageModal({
+                    modalState: true,
+                    actionType: "edit",
+                    board: item._id,
+                  });
+                }}
+                key={index}
+                data={item}
+              />
             );
           })
         )}
@@ -45,6 +61,7 @@ const Boards = () => {
               modalState: true,
               actionType: "create",
             });
+            BoardFormik.resetForm();
           }}
         />
       </div>
@@ -60,29 +77,35 @@ const Boards = () => {
           setManageModal({
             modalState: false,
             actionType: "",
-            board: {},
+            board: "",
           })
         }
-        onSubmit={() => createBoardFormik.handleSubmit()}
-        onCancel={() => createBoardFormik.resetForm()}
+        onSubmit={
+          manageModal.actionType === "create"
+            ? () => BoardFormik.handleSubmit()
+            : undefined
+        }
+        onCancel={
+          manageModal.actionType === "create"
+            ? () => BoardFormik.resetForm()
+            : undefined
+        }
+        onEdit={manageModal.actionType === "edit" ? () => {} : undefined}
+        loading={BoardInfoMutating.isPending}
         onCloseButton={() =>
           setManageModal({
             modalState: false,
             actionType: "",
-            board: {},
+            board: "",
           })
         }
         submitLoading={createBoardMutation.isPending}
       >
         <div className="p-3 grid gap-3 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-          <FormikTextInput formik={createBoardFormik} name="name" label="نام" />
-          <FormikTextInput
-            formik={createBoardFormik}
-            name="emoji"
-            label="اموجی"
-          />
+          <FormikTextInput formik={BoardFormik} name="name" label="نام" />
+          <FormikTextInput formik={BoardFormik} name="emoji" label="اموجی" />
           <FormikDatePickerInput
-            formik={createBoardFormik}
+            formik={BoardFormik}
             name="date"
             label="تاریخ"
             required
@@ -99,26 +122,23 @@ const Boards = () => {
                     <span className="loading loading-ring loading-lg"></span>
                   </div>
                 )}
-                {createBoardFormik.values.backgroundImageUrl && (
+                {BoardFormik.values.backgroundImageUrl && (
                   <div className="w-full bg-red-500 rounded-lg relative h-[35vh] ">
                     <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-300 transform group-hover:scale-125 rounded-b-lg"
                       style={{
-                        backgroundImage: `url("${createBoardFormik.values.backgroundImageUrl}")`,
+                        backgroundImage: `url("${BoardFormik.values.backgroundImageUrl}")`,
                       }}
                     ></div>
                   </div>
                 )}
               </label>
 
-              {createBoardFormik.values.backgroundImageUrl && (
+              {BoardFormik.values.backgroundImageUrl && (
                 <button
                   onClick={() => {
-                    createBoardFormik.setFieldValue("backgroundImageUrl", "");
-                    createBoardFormik.setFieldValue(
-                      "selectBackgroundImageUrl",
-                      ""
-                    );
+                    BoardFormik.setFieldValue("backgroundImageUrl", "");
+                    BoardFormik.setFieldValue("selectBackgroundImageUrl", "");
                     queryClient.refetchQueries({ queryKey: ["GET_UPLOADS"] });
                   }}
                   className="btn btn-outline btn-xs btn-circle btn-error absolute top-14 left-3 z-50"
@@ -127,7 +147,7 @@ const Boards = () => {
                 </button>
               )}
               <input
-                disabled={!!createBoardFormik.values.backgroundImageUrl}
+                disabled={!!BoardFormik.values.backgroundImageUrl}
                 onChange={async (event) => {
                   if (event.target.files && event.target.files[0]) {
                     const img = event.target.files[0];
@@ -154,7 +174,7 @@ const Boards = () => {
                         uploadImage.data?.url
                       }`;
                       if (uploadImage.status) {
-                        createBoardFormik.setFieldValue(
+                        BoardFormik.setFieldValue(
                           "backgroundImageUrl",
                           fullUrl
                         );
@@ -173,7 +193,7 @@ const Boards = () => {
                 className="col-span-3 file-input file-input-bordered file-input-secondary hidden"
               />
             </div>
-            <FormikError name="backgroundImageUrl" formik={createBoardFormik} />
+            <FormikError name="backgroundImageUrl" formik={BoardFormik} />
           </div>
           <FormikSelectInput
             options={
@@ -181,17 +201,18 @@ const Boards = () => {
                 return { label: item.name, value: item.url };
               }) || []
             }
-            formik={createBoardFormik}
+            formik={BoardFormik}
             name="selectBackgroundImageUrl"
             label="انتخاب عکس"
             placeholder="عکس مورد نظر خودرا انتخاب کنید"
             className="sm:col-span-3"
-            disable={!!createBoardFormik.values.backgroundImageUrl}
+            disable={!!BoardFormik.values.backgroundImageUrl}
+            disableRemoveBtn={!BoardFormik.values.backgroundImageUrl}
             onExtraChange={(e) => {
               const fullUrl = `${import.meta.env.VITE_FILE_BASE_URL}${
                 e.target.value
               }`;
-              createBoardFormik.setFieldValue("backgroundImageUrl", fullUrl);
+              BoardFormik.setFieldValue("backgroundImageUrl", fullUrl);
             }}
           />
         </div>

@@ -13,6 +13,7 @@ interface Props {
   required?: boolean;
   onExtraChange?: (e: any) => void;
   options: { label: string; value: any; disabled?: boolean }[];
+  disableRemoveBtn?: boolean;
 }
 const FormikSelectInput: FC<Props> = ({
   formik,
@@ -24,6 +25,7 @@ const FormikSelectInput: FC<Props> = ({
   placeholder,
   required,
   onExtraChange,
+  disableRemoveBtn = false,
 }) => {
   return (
     <>
@@ -33,7 +35,7 @@ const FormikSelectInput: FC<Props> = ({
             {label} {required && <span className="text-red-600">*</span>}
           </span>
         )}
-        {formik.values[name] && (
+        {formik.values[name] && disableRemoveBtn && (
           <IoClose
             onClick={() => {
               formik.setFieldValue(name, "");

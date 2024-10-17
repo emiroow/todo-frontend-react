@@ -66,9 +66,6 @@ const Login = () => {
         navigate("/");
       }
     },
-    onError: (error) => {
-      console.log(error);
-    },
   });
 
   return (

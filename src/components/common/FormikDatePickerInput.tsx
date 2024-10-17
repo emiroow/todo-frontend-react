@@ -53,7 +53,7 @@ const FormikDatePickerInput: FC<Props> = ({
             onFocus={onFocus}
             value={value}
             onChange={onChange}
-            className="grow "
+            className="grow"
             name={name}
             id={name}
             placeholder={placeholder ?? `${label} را وارد کنید`}
@@ -71,6 +71,7 @@ const FormikDatePickerInput: FC<Props> = ({
         render={<CustomInput />}
         calendar={persian}
         locale={persian_fa}
+        value={formik.values[name]}
         className="bg-dark"
         calendarPosition="bottom-left"
         onChange={(selectedDate) => {

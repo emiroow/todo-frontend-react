@@ -9,8 +9,9 @@ import {
 import { useNavigate } from "react-router-dom";
 const Board: FC<{
   data: NonNullable<IBoardResponse["boardList"]>[number];
-  setManageModal: (data: any) => void;
-}> = ({ data, setManageModal }) => {
+  editBoard?: () => void;
+  deleteBoard?: () => void;
+}> = ({ data, editBoard, deleteBoard }) => {
   const navigate = useNavigate();
 
   return (
@@ -24,24 +25,26 @@ const Board: FC<{
         </button>
         <ul className="menu dropdown-content bg-base-200 rounded-lg -m-1.5 mt-0.5 gap-3 p-1.5">
           <li>
-            <a
-              onClick={() =>
-                setManageModal({
-                  modalState: true,
-                  actionType: "edit",
-                  board: data,
-                })
-              }
-              className="tooltip tooltip-right p-0"
+            <button
+              onClick={async () => {
+                editBoard?.();
+              }}
+              className="menu-dropdown-toggle tooltip tooltip-right p-0"
               data-tip="ویرایش"
             >
               <BsFillPencilFill className="p-[8px] text-3xl text-green-500" />
-            </a>
+            </button>
           </li>
-          <li onClick={() => console.log("حذف")}>
-            <a className="tooltip tooltip-right p-0" data-tip="حذف">
+          <li>
+            <button
+              onClick={async (e) => {
+                deleteBoard?.();
+              }}
+              className="tooltip tooltip-right p-0"
+              data-tip="حذف"
+            >
               <BsFillTrashFill className="p-[8px] text-3xl text-red-500" />
-            </a>
+            </button>
           </li>
         </ul>
       </div>

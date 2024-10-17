@@ -1,4 +1,4 @@
-import { IBoardResponse } from "@/interfaces/response/IBoard";
+import { BoardList, IBoardResponse } from "@/interfaces/response/IBoard";
 import { apiService } from "@/service/axiosService";
 import { validateSchema } from "@/utils/common/joiValidator";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -11,12 +11,13 @@ const useBoards = () => {
   const [manageModal, setManageModal] = useState<{
     modalState: boolean;
     actionType?: "create" | "edit" | "";
-    board?: object;
+    board?: string;
   }>({
     modalState: false,
     actionType: "",
-    board: {},
+    board: "",
   });
+
   const queryClient = useQueryClient();
 
   const getBoards = async () => {
@@ -58,7 +59,7 @@ const useBoards = () => {
     }),
   });
 
-  const createBoardFormik = useFormik<any>({
+  const BoardFormik = useFormik<any>({
     validate: (value) => validateSchema(schema, value),
     initialValues: {
       backgroundImageUrl: "",
@@ -84,16 +85,37 @@ const useBoards = () => {
   const createBoardMutation = useMutation({
     mutationFn: createBoard,
     onSuccess: (data) => {
-      createBoardFormik.resetForm();
+      BoardFormik.resetForm();
       queryClient.fetchQuery({ queryKey: ["GET_BOARDS"] });
       setManageModal({
         modalState: false,
         actionType: "",
-        board: {},
+        board: "",
       });
       if (data.status) {
         toast.success(data.massage);
       }
+    },
+  });
+
+  const getBoardInfo = async (board?: string) => {
+    const data = apiService<BoardList>({
+      method: "GET",
+      path: "board/info",
+      Option: { params: { board } },
+    });
+    return data;
+  };
+  const BoardInfoMutating = useMutation({
+    mutationFn: getBoardInfo,
+    onSuccess: (response) => {
+      BoardFormik.setValues({
+        backgroundImageUrl: response.data?.backgroundImageUrl,
+        date: response.data?.date,
+        emoji: response.data?.emoji,
+        name: response.data?.name,
+        selectBackgroundImageUrl: "",
+      });
     },
   });
 
@@ -115,10 +137,11 @@ const useBoards = () => {
     isLoading,
     manageModal,
     setManageModal,
-    createBoardFormik,
+    BoardFormik,
     createBoardMutation,
     uploads,
     queryClient,
+    BoardInfoMutating,
   };
 };
 

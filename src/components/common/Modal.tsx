@@ -3,12 +3,14 @@ import { MdClose } from "react-icons/md";
 
 interface Props {
   modalState: boolean;
+  loading?: boolean;
   modalStateSetter: any;
   title?: string;
   onCancel?: () => void;
   onSubmit?: () => void;
   onCloseButton?: () => void;
   onCloseESC?: () => void;
+  onEdit?: () => void;
   children: React.ReactElement;
   contentClass?: string;
   submitLoading?: boolean;
@@ -26,6 +28,8 @@ const Modal: FC<Props> = ({
   onSubmit,
   size,
   submitLoading = false,
+  loading = false,
+  onEdit,
 }) => {
   if (modalState) {
     document.body.style.overflow = "hidden";
@@ -75,42 +79,66 @@ const Modal: FC<Props> = ({
               ) : null}
 
               {/* content */}
-              <div className={`w-full p-2 ${contentClass}`}>{children}</div>
-              {/* action btn,s */}
-              <div className="w-full flex justify-end gap-3 p-5">
-                {onSubmit && (
-                  <button
-                    onClick={onSubmit}
-                    className="btn btn-success btn-sm text-white"
-                    type="submit"
-                  >
-                    {submitLoading ? (
-                      <span className="loading loading-spinner loading-md text-white"></span>
-                    ) : (
-                      "ثبت"
-                    )}
-                  </button>
-                )}
-                {onCancel && (
-                  <button
-                    onClick={onCancel}
-                    className="btn btn-error btn-sm text-white"
-                  >
-                    انصراف
-                  </button>
-                )}
-                {onCloseButton && (
-                  <button
-                    onClick={() => {
-                      modalStateSetter(false);
-                      onCloseButton();
-                    }}
-                    className="btn btn-secondary btn-sm text-white"
-                  >
-                    بستن
-                  </button>
+              <div className={`w-full p-2 ${contentClass}`}>
+                {loading ? (
+                  <div className="w-full flex justify-center h-[30vh]">
+                    <span className="loading loading-ring loading-lg"></span>
+                  </div>
+                ) : (
+                  children
                 )}
               </div>
+              {/* action btn,s */}
+              {!loading && (
+                <div className="w-full flex justify-end gap-3 p-5">
+                  {onSubmit && (
+                    <button
+                      onClick={onSubmit}
+                      className="btn btn-success btn-sm text-white"
+                      type="submit"
+                    >
+                      {submitLoading ? (
+                        <span className="loading loading-spinner loading-md text-white"></span>
+                      ) : (
+                        "ثبت"
+                      )}
+                    </button>
+                  )}
+                  {onEdit && (
+                    <button
+                      onClick={onEdit}
+                      className="btn btn-success btn-sm text-white"
+                      type="submit"
+                    >
+                      {submitLoading ? (
+                        <span className="loading loading-spinner loading-md text-white"></span>
+                      ) : (
+                        "ویرایش"
+                      )}
+                    </button>
+                  )}
+                  {onCancel && (
+                    <button
+                      onClick={onCancel}
+                      className="btn btn-error btn-sm text-white"
+                    >
+                      انصراف
+                    </button>
+                  )}
+
+                  {onCloseButton && (
+                    <button
+                      onClick={() => {
+                        modalStateSetter(false);
+                        onCloseButton();
+                      }}
+                      className="btn btn-secondary btn-sm text-white"
+                    >
+                      بستن
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
             {/* back Drop */}
             <div

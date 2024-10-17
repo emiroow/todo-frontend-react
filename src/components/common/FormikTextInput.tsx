@@ -73,6 +73,7 @@ const FormikTextInput: FC<Props> = ({
           name={name}
           id={name}
           className="grow"
+          value={formik.values[name]}
           onChange={(e) => {
             if (e.target.value) formik.setFieldValue(name, e.target.value);
             else formik.setFieldValue(name, "");
