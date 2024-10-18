@@ -25,6 +25,7 @@ const Boards = () => {
     uploads,
     queryClient,
     BoardInfoMutating,
+    updateBoardMutating,
   } = useBoards();
 
   const [uploadLoader, setLoader] = useState(false);
@@ -90,7 +91,11 @@ const Boards = () => {
             ? () => BoardFormik.resetForm()
             : undefined
         }
-        onEdit={manageModal.actionType === "edit" ? () => {} : undefined}
+        onEdit={
+          manageModal.actionType === "edit"
+            ? () => BoardFormik.handleSubmit()
+            : undefined
+        }
         loading={BoardInfoMutating.isPending}
         onCloseButton={() =>
           setManageModal({
@@ -100,6 +105,7 @@ const Boards = () => {
           })
         }
         submitLoading={createBoardMutation.isPending}
+        updateLoading={updateBoardMutating.isPending}
       >
         <div className="p-3 grid gap-3 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
           <FormikTextInput formik={BoardFormik} name="name" label="نام" />
@@ -217,6 +223,8 @@ const Boards = () => {
           />
         </div>
       </Modal>
+
+      {/* delete Board  */}
     </>
   );
 };

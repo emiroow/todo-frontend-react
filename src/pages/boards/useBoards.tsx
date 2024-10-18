@@ -68,9 +68,11 @@ const useBoards = () => {
       name: "",
       selectBackgroundImageUrl: "",
     },
-    onSubmit: (data) => {
+    onSubmit: (formData) => {
+      const data = structuredClone(formData);
       delete data.selectBackgroundImageUrl;
-      createBoardMutation.mutate(data);
+      if (manageModal.actionType === "create") createBoardMutation.mutate(data);
+      else updateBoardMutating.mutate({ id: manageModal.board, body: data });
     },
   });
 
@@ -119,6 +121,48 @@ const useBoards = () => {
     },
   });
 
+  const updateBoard = async (queryData: { id?: string; body?: any }) => {
+    const data = apiService<any>({
+      method: "PUT",
+      path: `board/update/${queryData.id}`,
+      Option: { data: queryData.body },
+    });
+    return data;
+  };
+  const updateBoardMutating = useMutation({
+    mutationFn: updateBoard,
+    onSuccess: (response) => {
+      BoardFormik.resetForm();
+      queryClient.fetchQuery({ queryKey: ["GET_BOARDS"] });
+      setManageModal({
+        modalState: false,
+        actionType: "",
+        board: "",
+      });
+      if (response.status) {
+        toast.success(response.massage);
+      }
+    },
+  });
+
+  const deleteBoard = async (queryData: { id?: string; body?: any }) => {
+    const data = apiService<any>({
+      method: "DELETE",
+      path: `board/delete/${queryData.id}`,
+      Option: { data: queryData.body },
+    });
+    return data;
+  };
+  const deleteBoardMutating = useMutation({
+    mutationFn: deleteBoard,
+    onSuccess: (response) => {
+      queryClient.fetchQuery({ queryKey: ["GET_BOARDS"] });
+      if (response.status) {
+        toast.success(response.massage);
+      }
+    },
+  });
+
   const getUploadList = async () => {
     const data = await apiService<any>({
       path: "upload/list",
@@ -142,6 +186,7 @@ const useBoards = () => {
     uploads,
     queryClient,
     BoardInfoMutating,
+    updateBoardMutating,
   };
 };
 

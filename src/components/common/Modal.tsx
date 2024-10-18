@@ -14,6 +14,7 @@ interface Props {
   children: React.ReactElement;
   contentClass?: string;
   submitLoading?: boolean;
+  updateLoading?: boolean;
   size?: "w-1/5" | "w-2/5" | "w-3/5" | "w-4/5" | "w-5/5";
 }
 const Modal: FC<Props> = ({
@@ -28,6 +29,7 @@ const Modal: FC<Props> = ({
   onSubmit,
   size,
   submitLoading = false,
+  updateLoading = false,
   loading = false,
   onEdit,
 }) => {
@@ -110,7 +112,7 @@ const Modal: FC<Props> = ({
                       className="btn btn-success btn-sm text-white"
                       type="submit"
                     >
-                      {submitLoading ? (
+                      {updateLoading ? (
                         <span className="loading loading-spinner loading-md text-white"></span>
                       ) : (
                         "ویرایش"
